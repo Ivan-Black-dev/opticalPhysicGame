@@ -29,7 +29,9 @@ class GameControler:
                 polText = font.render(f'{i.angle}', True, color.RED)
                 this.screen.blit(polText, (i.x+(i.width/2)-20, i.y+(i.width/2)-20))
             elif isinstance(i, Mirror):
-                pygame.draw.line(this.screen, color.CYAN, (i.x1, i.y1), (i.x2, i.y2))
+                pygame.draw.circle(this.screen, color.CYAN, (i.x1, i.y1), 10)
+                pygame.draw.circle(this.screen, color.CYAN, (i.x2, i.y2), 10)
+                pygame.draw.line(this.screen, color.CYAN, (i.x1, i.y1), (i.x2, i.y2), 3)
             elif isinstance(i, Wall):
                 pygame.draw.rect(this.screen, i.color, (i.x, i.y, i.w, i.h))
             elif isinstance(i, FinishObject):

@@ -1,0 +1,55 @@
+import color
+from ray import Ray
+from finishObjectPol import FinishObjectPol
+from finishObject import FinishObject
+from polarizer import Polarizer
+from mirror import Mirror
+from wall import Wall
+import pygame
+import sys
+import time
+
+
+class GameControler:
+    
+    def __init__(this, screen):
+        this.screen = screen
+        this.BACKROUND_COLOR = color.BLACK
+        this.objects = []
+        this.win = False
+
+    def draw(this):
+        this.screen.fill(this.BACKROUND_COLOR)
+        for i in this.objects:
+            if isinstance(i, Ray):
+                for point in i.points:
+                    pygame.draw.circle(this.screen, i.color, point, i.width)
+            elif isinstance(i, FinishObject):
+                pygame.draw.rect(this.screen, i.color, (i.x, i.y, i.width, i.height))
+            elif isinstance(i, Polarizer):
+                pygame.draw.circle(this.screen, i.color, (i.x, i.y), i.width)
+                font = pygame.font.Font(None, 20)  # None - использовать шрифт по умолчанию, 74 - размер шрифта
+                polText = font.render(f'{i.angle}', True, color.RED)
+                this.screen.blit(polText, (i.x+(i.width/2)-20, i.y+(i.width/2)-20))
+            elif isinstance(i, Mirror):
+                pygame.draw.line(this.screen, color.CYAN, (i.x1, i.y1), (i.x2, i.y2))
+            elif isinstance(i, Wall):
+                pygame.draw.rect(this.screen, i.color, (i.x, i.y, i.w, i.h))
+            elif isinstance(i, FinishObjectPol):
+                pygame.draw.rect(this.screen, i.color, (i.x, i.y, i.width, i.height))
+                font = pygame.font.Font(None, 20)  # None - использовать шрифт по умолчанию, 74 - размер шрифта
+                textI = font.render(f'I: {i.I}', True, color.RED)
+                textAngl = font.render(f'ang: {i.angle}', True, color.RED)
+                this.screen.blit(textI, (i.x, i.y))
+                this.screen.blit(textAngl, (i.x, i.y+20))
+
+    def calculate(this):
+        for i in this.objects:
+            if isinstance(i, Ray):
+                if not i.finish:
+                    for j in this.objects:
+                        if not isinstance(j, Ray):
+                            rez = i.collision(j, this.screen)
+                            if rez == 1:
+                                this.win = True
+                    i.tick()

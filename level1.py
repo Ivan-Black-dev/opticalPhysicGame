@@ -44,7 +44,7 @@ def start(mirrors=[]):
     ray = Ray((20, 300,), (1, 0), width=2)
     gameControler.objects.append(ray)
 
-    finish = FinishObject(W-100, 10, 75, 10)
+    finish = FinishObject(W-100, 10, 75, 10, I=1, angle=-1)
     gameControler.objects.append(finish)
 
     startObjectLen = len(gameControler.objects)

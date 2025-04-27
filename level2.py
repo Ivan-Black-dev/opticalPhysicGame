@@ -1,7 +1,7 @@
 import pygame
 from gameControler import GameControler
 from wall import Wall
-from finishObjectPol import FinishObjectPol
+from finishObject import FinishObject
 from polarizer import Polarizer
 from ray import Ray
 import tkinter
@@ -34,7 +34,7 @@ def start(pol=[]):
     ray = Ray((20, 300,), (1, 0), width=2)
     gameControler.objects.append(ray)
 
-    finish = FinishObjectPol(W-60, H/2-50, 50, 100, 1/2, 30, color=color.BLUE)
+    finish = FinishObject(W-60, H/2-50, 50, 100, 1/2, 30, color=color.BLUE)
     gameControler.objects.append(finish)
 
     startObjectLen = len(gameControler.objects)

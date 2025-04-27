@@ -2,10 +2,11 @@ import color
 
 class FinishObject:
 
-    def __init__(self, x, y, width, height, color=color.WHITE):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.color = color
-
+    def __init__(this, x, y, width, height, I, angle, color=color.WHITE):
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+        this.color = color
+        this.I = I
+        this.angle = angle

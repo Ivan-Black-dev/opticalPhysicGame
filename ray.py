@@ -4,7 +4,6 @@ from polarizer import Polarizer
 from mirror import Mirror
 from wall import Wall
 from math import cos
-from finishObjectPol import FinishObjectPol
 
 
 class Ray:
@@ -26,12 +25,6 @@ class Ray:
         if x < 0 or y < 0 or x > width or y > height: # колизия лучей и стен
             this.finish = True
             return 0
-        if isinstance(object, FinishObject):
-            x_obj, y_obj = object.x, object.y
-            width_obj, height_obj = object.width, object.height
-            if x_obj < x < x_obj + width_obj and y_obj < y < y_obj + height_obj:
-                this.finish = True
-                return 1
         if isinstance(object, Polarizer):
             x, y = this.points[-1]
             x_obj, y_obj = object.x, object.y
@@ -59,12 +52,12 @@ class Ray:
                 x, y = this.points[-1]  # Получаем координаты мячика
                 wall_x, wall_y = object.x, object.y  # Получаем координаты верхнего левого угла стены
                 wall_w, wall_h = object.w, object.h  # Получаем ширину и высоту стены
-
                 # Проверяем, находится ли мячик внутри стены
                 if wall_x <= x <= wall_x + wall_w and wall_y <= y <= wall_y + wall_h:
                     this.finish = True
                     return -1
-        if isinstance(object, FinishObjectPol):
+                
+        if isinstance(object, FinishObject):
             x_obj, y_obj = object.x, object.y
             width_obj, height_obj = object.width, object.height
             I, angle = this.intensiv_and_angle[-1]

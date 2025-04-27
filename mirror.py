@@ -1,10 +1,12 @@
 import math
+import color
 
 class Mirror:
-    def __init__(this, x1, y1, x2, y2):
+    def __init__(this, x1, y1, x2, y2, color=color.WHITE):
         this.x1, this.y1 = x1, y1
         this.x2, this.y2 = x2, y2
         this.length = math.sqrt((x2-x1)**2 + (y2-y1)**2)
+        this.color = color
         
         # Вычисляем нормаль (перпендикуляр)
         dx, dy = x2 - x1, y2 - y1

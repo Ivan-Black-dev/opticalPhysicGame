@@ -83,6 +83,7 @@ def start(screen, pol=[]):
         gameControler.calculate()
         if gameControler.win:
             I, _ = ray.intensiv_and_angle[-1]
+            print(I)
             if I == 0.5:
                 return 2
             elif 0.16 - 0.06 <= I <= 0.16 + 0.06:

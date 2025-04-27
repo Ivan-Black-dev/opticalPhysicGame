@@ -16,7 +16,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
 # === Загрузка ресурсов ===
-background_img = pygame.image.load("assets/bck2.png").convert()
+background_img = pygame.image.load("assets/background.png").convert()
 background_img = pygame.transform.scale(background_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 finish_img = pygame.image.load("assets/finish.png").convert()
@@ -36,8 +36,11 @@ num2_img = pygame.transform.scale(num2_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 upr_img = pygame.image.load("assets/upr.png").convert()
 upr_img = pygame.transform.scale(upr_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+upr2_img = pygame.image.load("assets/upr_2.png").convert()
+upr2_img = pygame.transform.scale(upr2_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-oneStar = pygame.image.load('assets/111.png').convert()
+
+oneStar = pygame.image.load('assets/zv_1.png').convert()
 oneStar = pygame.transform.scale(oneStar, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 twoStar = pygame.image.load('assets/zv_2.png').convert()
@@ -126,18 +129,18 @@ def result(res, next_slide):
         mouse_pos = pygame.mouse.get_pos()
 
         # --- Кнопка рестарт ---
-        button1_rect = button_img.get_rect(center=(SCREEN_WIDTH // 2, 250))
+        button1_rect = button_img.get_rect(center=(SCREEN_WIDTH // 2, 350))
         hovered1 = button1_rect.collidepoint(mouse_pos)
         y_offset1 = 3 if clicked_button == 'level1' else 0
         screen.blit(button_img, button1_rect.move(0, y_offset1))
-        draw_text(" Заново", font, RED if hovered1 else WHITE, screen, SCREEN_WIDTH // 2, 250 + y_offset1)
+        draw_text(" Заново", font, RED if hovered1 else WHITE, screen, SCREEN_WIDTH // 2, 350 + y_offset1)
 
         # --- Кнопка дальше ---
-        button2_rect = button_img.get_rect(center=(SCREEN_WIDTH // 2, 350))
+        button2_rect = button_img.get_rect(center=(SCREEN_WIDTH // 2, 450))
         hovered2 = button2_rect.collidepoint(mouse_pos)
         y_offset2 = 3 if clicked_button == 'level2' else 0
         screen.blit(button_img, button2_rect.move(0, y_offset2))
-        draw_text(" Дальше", font, RED if hovered2 else WHITE, screen, SCREEN_WIDTH // 2, 350 + y_offset2)
+        draw_text(" Дальше", font, RED if hovered2 else WHITE, screen, SCREEN_WIDTH // 2, 450 + y_offset2)
 
 
         for event in pygame.event.get():
@@ -170,20 +173,25 @@ def result(res, next_slide):
 # === Пример функции запуска 1 уровня ===
 def start_level_one(screen):
     next_slide = 2 #след уровень 2й
-    screen.blit(num1_img, (0, 0))
-    pygame.display.update()
+    cnt = 0
     while True:
         for event in pygame.event.get():   
             if event.type == pygame.QUIT:
                 exit()
 
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and cnt == 0:
                 screen.blit(upr_img, (0, 0))
                 pygame.display.update()
+                cnt += 1
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN and cnt == 1:
+                screen.blit(num1_img, (0, 0))
+                pygame.display.update()
+                cnt += 1
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and cnt == 2:
                 import level1
-                rez = 1#level1.start(screen)
+                rez = level1.start(screen)
                 result(rez, next_slide)
         
     
@@ -191,22 +199,30 @@ def start_level_one(screen):
                 
 
 
-# === Заглушка для 2 уровня ===
+# === 2 уровень ===
 def start_level_two(screen):
-    screen.blit(num2_img, (0, 0))
     next_slide = 3 #след уровень 3й
-  
-    pygame.display.update()
+    cnt = 0
+    
     while True:
-
-        for event in pygame.event.get():
+        for event in pygame.event.get():   
             if event.type == pygame.QUIT:
                 exit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.KEYDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and cnt == 0:
+                screen.blit(upr2_img, (0, 0))
+                pygame.display.update()
+                cnt += 1
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN and cnt == 1:
+                screen.blit(num2_img, (0, 0))
+                pygame.display.update()
+                cnt += 1
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and cnt == 2:
                 import level2
-                res = level2.start(screen)
-                result(res, next_slide)
+                rez = level2.start(screen)
+                result(rez, next_slide)
 
     
 

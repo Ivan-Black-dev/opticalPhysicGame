@@ -3,8 +3,7 @@ from finishObject import FinishObject
 from polarizer import Polarizer
 from mirror import Mirror
 from wall import Wall
-from math import cos
-
+from math import cos, radians
 
 class Ray:
     
@@ -35,7 +34,7 @@ class Ray:
                 if old_angle == -1:
                     this.nextIntensiv_and_angle = (old_intensiv / 2, new_angle)    
                 else:
-                    this.nextIntensiv_and_angle = (old_intensiv * cos(new_angle-old_angle)**2, new_angle)
+                    this.nextIntensiv_and_angle = (old_intensiv * cos(radians(new_angle-old_angle))**2, new_angle)
         if isinstance(object, Mirror):
             dist = object.calculateDistance(this.points[-1])
             if dist < this.width:

@@ -6,6 +6,7 @@ import color
 from mirror import Mirror
 from wall import Wall
 import copy
+import sys
 
 
  
@@ -60,7 +61,8 @@ def start(screen, mirrors=[]):
     while not stop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_s:
@@ -128,6 +130,7 @@ def start(screen, mirrors=[]):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     m = []

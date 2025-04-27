@@ -177,7 +177,8 @@ def start_level_one(screen):
     while True:
         for event in pygame.event.get():   
             if event.type == pygame.QUIT:
-                exit()
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN and cnt == 0:
                 screen.blit(upr_img, (0, 0))
@@ -207,7 +208,8 @@ def start_level_two(screen):
     while True:
         for event in pygame.event.get():   
             if event.type == pygame.QUIT:
-                exit()
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN and cnt == 0:
                 screen.blit(upr2_img, (0, 0))

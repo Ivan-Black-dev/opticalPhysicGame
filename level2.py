@@ -7,6 +7,7 @@ from ray import Ray
 import tkinter
 from tkinter import simpledialog
 import color
+import sys
 
 
 
@@ -46,7 +47,9 @@ def start(screen, pol=[]):
     while not stop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()
+                pygame.quit()
+                sys.exit()
+
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_s:
@@ -80,7 +83,8 @@ def start(screen, pol=[]):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     m = []

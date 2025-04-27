@@ -44,6 +44,8 @@ def draw_text(text, font, color, surface, x, y, center=True):
     return text_rect
 
 
+
+
 def main_menu(start_game_callback, level2_callback):
     clicked_button = None  # None, 'level1', or 'level2'
 
@@ -86,33 +88,109 @@ def main_menu(start_game_callback, level2_callback):
         pygame.display.flip()
         clock.tick(FPS)
 
+def finish_menu():
+    screen.blit(finish.png, (0, 0))
+    pygame.display.update()
+
+
+def result(res, next_slide):
+    clicked_button = None  # None, 'level1', or 'level2'
+
+    while True:
+        if res == 1:
+            screen.blit(zv_1.png, (0, 0))
+            mouse_pos = pygame.mouse.get_pos()
+        elif res == 2:
+            screen.blit(zv_2.png, (0, 0))
+            mouse_pos = pygame.mouse.get_pos()
+        elif res == 3:
+            screen.blit(zv_3.png, (0, 0))
+            mouse_pos = pygame.mouse.get_pos()
+
+        # --- Кнопка рестарт ---
+        button1_rect = button_img.get_rect(center=(SCREEN_WIDTH // 2, 250))
+        hovered1 = button1_rect.collidepoint(mouse_pos)
+        y_offset1 = 3 if clicked_button == 'level1' else 0
+        screen.blit(button_img, button1_rect.move(0, y_offset1))
+        draw_text(" Заново", font, RED if hovered1 else WHITE, screen, SCREEN_WIDTH // 2, 250 + y_offset1)
+
+        # --- Кнопка дальше ---
+        button2_rect = button_img.get_rect(center=(SCREEN_WIDTH // 2, 350))
+        hovered2 = button2_rect.collidepoint(mouse_pos)
+        y_offset2 = 3 if clicked_button == 'level2' else 0
+        screen.blit(button_img, button2_rect.move(0, y_offset2))
+        draw_text(" Дальше", font, RED if hovered2 else WHITE, screen, SCREEN_WIDTH // 2, 350 + y_offset2)
+
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if hovered1:
+                    clicked_button = 'level1'
+                elif hovered2:
+                    clicked_button = 'level2'
+
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                if clicked_button == 'level1' and hovered1 and next_slide == 2:
+                    start_game_callback()
+                elif clicked_button == 'level2' and hovered2 and next_slide == 2:
+                    level2_callback()
+
+                if clicked_button == 'level1' and hovered1 and next_slide == 3:
+                    level2_callback()
+                elif clicked_button == 'level2' and hovered2 and next_slide == 3:
+                    finish_menu()
+                clicked_button = None
+
+        pygame.display.flip()
+        clock.tick(FPS)
+
 
 # === Пример функции запуска 1 уровня ===
 def start_level_one():
+    next_slide = 2 #след уровень 2й
     screen.blit(num1_img, (0, 0))
     pygame.display.update()
     while True:
         for event in pygame.event.get():   
+            if event.type == pygame.QUIT:
+                exit()
+
             if event.type == pygame.KEYDOWN:
                 screen.blit(upr_img, (0, 0))
                 pygame.display.update()
 
-        for event in pygame.event.get():   
             if event.type == pygame.MOUSEBUTTONDOWN:
                 import level1
-                rez = level1.start() # Тут 1, если победили. Функция работает пока пользователь не победил/вышел
+                rez = level1.start()
+                result(res, next_slide)
+        
+    
+
                 
 
 
 # === Заглушка для 2 уровня ===
 def start_level_two():
     screen.blit(num2_img, (0, 0))
+    next_slide = 3 #след уровень 3й
+  
     pygame.display.update()
     while True:
-        for event in pygame.event.get():   
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.KEYDOWN:
                 import level2
-                level2.start()
+                res = level2.start()
+                result(res, next_slide)
+
+    
 
 
 # === Запуск меню ===

@@ -25,13 +25,13 @@ class GameControler:
                     pygame.draw.circle(this.screen, i.color, point, i.width)
             elif isinstance(i, Polarizer):
                 pygame.draw.circle(this.screen, i.color, (i.x, i.y), i.width)
-                font = pygame.font.Font(None, 20)  # None - использовать шрифт по умолчанию, 74 - размер шрифта
+                font = pygame.font.Font(None, 20) 
                 polText = font.render(f'{i.angle}', True, color.RED)
                 this.screen.blit(polText, (i.x+(i.width/2)-20, i.y+(i.width/2)-20))
             elif isinstance(i, Mirror):
-                pygame.draw.circle(this.screen, color.CYAN, (i.x1, i.y1), 10)
-                pygame.draw.circle(this.screen, color.CYAN, (i.x2, i.y2), 10)
-                pygame.draw.line(this.screen, color.CYAN, (i.x1, i.y1), (i.x2, i.y2))
+                pygame.draw.circle(this.screen, i.color, (i.x1, i.y1), 10)
+                pygame.draw.circle(this.screen, i.color, (i.x2, i.y2), 10)
+                pygame.draw.line(this.screen, i.color, (i.x1, i.y1), (i.x2, i.y2))
             elif isinstance(i, Wall):
                 pygame.draw.rect(this.screen, i.color, (i.x, i.y, i.w, i.h))
             elif isinstance(i, FinishObject):

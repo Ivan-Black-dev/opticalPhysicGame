@@ -60,8 +60,7 @@ class Ray:
         if isinstance(object, FinishObject):
             x_obj, y_obj = object.x, object.y
             width_obj, height_obj = object.width, object.height
-            I, angle = this.intensiv_and_angle[-1]
-            if x_obj < x < x_obj + width_obj and y_obj < y < y_obj + height_obj and I == object.I and angle == object.angle:
+            if x_obj < x < x_obj + width_obj and y_obj < y < y_obj + height_obj:
                 this.finish = True
                 return 1
                     

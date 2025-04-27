@@ -58,6 +58,7 @@ def start(pol=[]):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 cor = pygame.mouse.get_pos()
                 if event.button == 1 and (10 < cor[0] < W-10) and (10 < cor[0] < H-10): # Создание поляризатора   
+
                     root = tkinter.Tk()
                     root.withdraw()  # Скрыть главное окно
                     angle = simpledialog.askstring("Настройки", "Введите угол:")
@@ -83,10 +84,15 @@ def start(pol=[]):
         
         gameControler.calculate()
         if gameControler.win:
-            return 1
-        
+            I, _ = ray.intensiv_and_angle[-1]
+            if I == 0.5:
+                return 2
+            elif 0.16 - 0.06 <= I <= 0.16 + 0.06:
+                return 3
+            else:
+                return 1
+
         gameControler.draw()
         pygame.display.update()
-
 
 print(start())

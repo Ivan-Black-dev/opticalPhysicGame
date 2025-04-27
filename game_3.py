@@ -2,7 +2,7 @@ import pygame
 import sys
 
 # === Настройка ===
-SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+SCREEN_WIDTH, SCREEN_HEIGHT = 720, 600
 FPS = 60
 
 
@@ -16,8 +16,11 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
 # === Загрузка ресурсов ===
-background_img = pygame.image.load("assets/background.png").convert()
+background_img = pygame.image.load("assets/bck2.png").convert()
 background_img = pygame.transform.scale(background_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
+finish_img = pygame.image.load("assets/finish.png").convert()
+finish_img = pygame.transform.scale(finish_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 button_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
 button_img = pygame.transform.scale(button_img, (300, 60))
@@ -34,8 +37,8 @@ upr_img = pygame.image.load("assets/upr.png").convert()
 upr_img = pygame.transform.scale(upr_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
-oneStar = pygame.image.load('assets/zv_1.png').convert()
-oneStar = pygame.transform.scale(oneStar, (SCREEN_WIDTH-50, SCREEN_HEIGHT))
+oneStar = pygame.image.load('assets/111.png').convert()
+oneStar = pygame.transform.scale(oneStar, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 twoStar = pygame.image.load('assets/zv_2.png').convert()
 twoStar = pygame.transform.scale(twoStar, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -90,17 +93,23 @@ def main_menu(start_game_callback, level2_callback):
 
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 if clicked_button == 'level1' and hovered1:
-                    start_game_callback()
+                    start_game_callback(screen)
                 elif clicked_button == 'level2' and hovered2:
-                    level2_callback()
+                    level2_callback(screen)
                 clicked_button = None
 
         pygame.display.flip()
         clock.tick(FPS)
 
 def finish_menu():
-    screen.blit('finish.png', (0, 0))
-    pygame.display.update()
+    while True:
+        screen.blit(finish_img, (0, 0))
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
 
 def result(res, next_slide):
@@ -144,12 +153,12 @@ def result(res, next_slide):
 
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 if clicked_button == 'level1' and hovered1 and next_slide == 2:
-                    start_level_one()
+                    start_level_one(screen)
                 elif clicked_button == 'level2' and hovered2 and next_slide == 2:
-                    start_level_two()
+                    start_level_two(screen)
 
                 if clicked_button == 'level1' and hovered1 and next_slide == 3:
-                    start_level_two()
+                    start_level_two(screen)
                 elif clicked_button == 'level2' and hovered2 and next_slide == 3:
                     finish_menu()
                 clicked_button = None
@@ -159,7 +168,7 @@ def result(res, next_slide):
 
 
 # === Пример функции запуска 1 уровня ===
-def start_level_one():
+def start_level_one(screen):
     next_slide = 2 #след уровень 2й
     screen.blit(num1_img, (0, 0))
     pygame.display.update()
@@ -174,7 +183,7 @@ def start_level_one():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 import level1
-                rez = level1.start()
+                rez = 1#level1.start(screen)
                 result(rez, next_slide)
         
     
@@ -183,7 +192,7 @@ def start_level_one():
 
 
 # === Заглушка для 2 уровня ===
-def start_level_two():
+def start_level_two(screen):
     screen.blit(num2_img, (0, 0))
     next_slide = 3 #след уровень 3й
   
@@ -196,7 +205,7 @@ def start_level_two():
 
             if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.KEYDOWN:
                 import level2
-                res = level2.start()
+                res = level2.start(screen)
                 result(res, next_slide)
 
     

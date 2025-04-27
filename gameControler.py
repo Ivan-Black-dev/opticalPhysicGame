@@ -31,7 +31,7 @@ class GameControler:
             elif isinstance(i, Mirror):
                 pygame.draw.circle(this.screen, i.color, (i.x1, i.y1), 10)
                 pygame.draw.circle(this.screen, i.color, (i.x2, i.y2), 10)
-                pygame.draw.line(this.screen, i.color, (i.x1, i.y1), (i.x2, i.y2))
+                pygame.draw.line(this.screen, i.color, (i.x1, i.y1), (i.x2, i.y2), 3)
             elif isinstance(i, Wall):
                 pygame.draw.rect(this.screen, i.color, (i.x, i.y, i.w, i.h))
             elif isinstance(i, FinishObject):

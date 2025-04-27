@@ -183,7 +183,7 @@ def start_level_one(screen):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 import level1
-                rez = 1#level1.start(screen)
+                rez = level1.start(screen)
                 result(rez, next_slide)
         
     

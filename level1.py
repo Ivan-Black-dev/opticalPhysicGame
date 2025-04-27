@@ -1,11 +1,11 @@
 import pygame 
 from gameControler import GameControler
-import time
 from ray import Ray
 from finishObject import FinishObject
 import color
 from mirror import Mirror
 from wall import Wall
+import copy
 
 
  
@@ -56,6 +56,7 @@ def start(screen, mirrors=[]):
     stop = False
     points = []
     hold = False
+    holdedMirror = None
     while not stop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -73,11 +74,11 @@ def start(screen, mirrors=[]):
                         x1, y1 = i.x1, i.y1
                         x2, y2 = i.x2, i.y2
                         x, y = event.pos
-                        if (x1 - x)**2 + (y1 - y)**2 <= 20:
+                        if (x1 - x)**2 + (y1 - y)**2 <= 30:
                             hold = True
                             holdedMirror = i
                             pointNum = 1
-                        elif  (x2 - x)**2 + (y2 - y)**2 <=20:
+                        elif  (x2 - x)**2 + (y2 - y)**2 <= 30:
                             hold = True
                             holdedMirror = i
                             pointNum = 2
@@ -88,7 +89,14 @@ def start(screen, mirrors=[]):
                             points = [] 
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1 and hold:
+                    x1, y1 = holdedMirror.x1, holdedMirror.y1
+                    x2, y2 = holdedMirror.x2, holdedMirror.y2
+                    colorMirorr = holdedMirror.color
+                    gameControler.objects.append(Mirror(x1, y1, x2, y2, colorMirorr))
+                    gameControler.objects.remove(holdedMirror)
+                    del holdedMirror
                     hold = False
+
         
         if hold:
             x, y = pygame.mouse.get_pos()
@@ -98,7 +106,6 @@ def start(screen, mirrors=[]):
             elif pointNum == 2:
                 holdedMirror.x2 = x
                 holdedMirror.y2 = y
-
 
         gameControler.draw()
 
@@ -118,7 +125,6 @@ def start(screen, mirrors=[]):
 
 
     while True:
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

@@ -8,16 +8,14 @@ import tkinter
 from tkinter import simpledialog
 import color
 
-pygame.init() 
 
-W = 720
-H = 600
 
-screen = pygame.display.set_mode((W, H)) 
+ 
 
-def start(pol=[]):
+def start(screen, pol=[]):
+    W, H = screen.get_size()
     gameControler = GameControler(screen)
-    
+
     # ============================ СТАРТОВАЯ РАСТОНОВКА ============================
     wall = Wall(0, 0, 10, H)
     gameControler.objects.append(wall)
@@ -80,7 +78,7 @@ def start(pol=[]):
                     for i in gameControler.objects:
                         if isinstance(i, Polarizer):
                             m.append(i)
-                    return start(m)
+                    return start(screen, m)
         
         gameControler.calculate()
         if gameControler.win:

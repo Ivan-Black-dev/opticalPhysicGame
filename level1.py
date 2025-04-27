@@ -7,18 +7,17 @@ import color
 from mirror import Mirror
 from wall import Wall
 
-# initializing the constructor 
-pygame.init() 
 
-W = 720
-H = 600
-
-screen = pygame.display.set_mode((W, H)) 
-pygame.font.init()
-font = pygame.font.Font(None, 45)
+ 
 
 
-def start(mirrors=[]):
+def start(screen, mirrors=[]):
+
+    pygame.font.init()
+    font = pygame.font.Font(None, 45)
+
+    W, H = screen.get_size()
+
     gameControler = GameControler(screen)
     # ============================== СТЕНЫ ==============================
     wall = Wall(0, 0, 10, H)
@@ -129,7 +128,7 @@ def start(mirrors=[]):
                     for i in gameControler.objects:
                         if isinstance(i, Mirror):
                             m.append(i)
-                    return start(m)
+                    return start(screen, m)
 
         gameControler.calculate()
         if gameControler.win:

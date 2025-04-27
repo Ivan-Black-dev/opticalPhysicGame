@@ -94,5 +94,3 @@ def start(pol=[]):
 
         gameControler.draw()
         pygame.display.update()
-
-print(start())

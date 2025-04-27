@@ -33,6 +33,16 @@ num2_img = pygame.transform.scale(num2_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 upr_img = pygame.image.load("assets/upr.png").convert()
 upr_img = pygame.transform.scale(upr_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+
+oneStar = pygame.image.load('assets/zv_1.png').convert()
+oneStar = pygame.transform.scale(oneStar, (SCREEN_WIDTH-50, SCREEN_HEIGHT))
+
+twoStar = pygame.image.load('assets/zv_2.png').convert()
+twoStar = pygame.transform.scale(twoStar, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
+threeStar = pygame.image.load('assets/zv_3.png').convert()
+threeStar = pygame.transform.scale(threeStar, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
 def draw_text(text, font, color, surface, x, y, center=True):
     text_obj = font.render(text, True, color)
     text_rect = text_obj.get_rect()
@@ -89,7 +99,7 @@ def main_menu(start_game_callback, level2_callback):
         clock.tick(FPS)
 
 def finish_menu():
-    screen.blit(finish.png, (0, 0))
+    screen.blit('finish.png', (0, 0))
     pygame.display.update()
 
 
@@ -97,15 +107,14 @@ def result(res, next_slide):
     clicked_button = None  # None, 'level1', or 'level2'
 
     while True:
+
         if res == 1:
-            screen.blit(zv_1.png, (0, 0))
-            mouse_pos = pygame.mouse.get_pos()
+            screen.blit(oneStar, (0, 0))
         elif res == 2:
-            screen.blit(zv_2.png, (0, 0))
-            mouse_pos = pygame.mouse.get_pos()
+            screen.blit(twoStar, (0, 0))
         elif res == 3:
-            screen.blit(zv_3.png, (0, 0))
-            mouse_pos = pygame.mouse.get_pos()
+            screen.blit(threeStar, (0, 0))
+        mouse_pos = pygame.mouse.get_pos()
 
         # --- Кнопка рестарт ---
         button1_rect = button_img.get_rect(center=(SCREEN_WIDTH // 2, 250))
@@ -135,12 +144,12 @@ def result(res, next_slide):
 
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 if clicked_button == 'level1' and hovered1 and next_slide == 2:
-                    start_game_callback()
+                    start_level_one()
                 elif clicked_button == 'level2' and hovered2 and next_slide == 2:
-                    level2_callback()
+                    start_level_two()
 
                 if clicked_button == 'level1' and hovered1 and next_slide == 3:
-                    level2_callback()
+                    start_level_two()
                 elif clicked_button == 'level2' and hovered2 and next_slide == 3:
                     finish_menu()
                 clicked_button = None
@@ -166,7 +175,7 @@ def start_level_one():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 import level1
                 rez = level1.start()
-                result(res, next_slide)
+                result(rez, next_slide)
         
     
 

@@ -13,6 +13,7 @@ import color
  
 
 def start(screen, pol=[]):
+    font = pygame.font.Font(None, 20)  
     W, H = screen.get_size()
     gameControler = GameControler(screen)
 
@@ -64,8 +65,16 @@ def start(screen, pol=[]):
                     pol = Polarizer(cor[0], cor[1], int(angle), width=20)
                     gameControler.objects.append(pol)
 
-
         gameControler.draw()
+
+        text = font.render("I = 1", True, color.RED)
+        text_rect = text.get_rect(center=(40, H // 2 + 30))
+        screen.blit(text, text_rect)
+
+        text = font.render(f"I = 0.16", True, color.RED)
+        text_rect = text.get_rect(center=(W-40, H // 2 + 100))
+        screen.blit(text, text_rect)
+
         pygame.display.update()
 
     while True:
@@ -90,5 +99,14 @@ def start(screen, pol=[]):
             else:
                 return 1
 
-        gameControler.draw()
+        gameControler.draw()    
+
+        text = font.render("I = 1", True, color.RED)
+        text_rect = text.get_rect(center=(40, H // 2 + 30))
+        screen.blit(text, text_rect)
+
+        text = font.render(f"I = {round(ray.intensiv_and_angle[-1][0], 2)}", True, color.RED)
+        text_rect = text.get_rect(center=(W-40, H // 2 + 100))
+        screen.blit(text, text_rect)
+
         pygame.display.update()

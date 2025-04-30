@@ -144,9 +144,9 @@ def start(screen, mirrors=[]):
             count = len(gameControler.objects) - startObjectLen
             if count == 2:
                 return 3
-            elif count == 4:
+            elif count == 3:
                 return 2
-            elif count > 4:
+            elif count > 3:
                 return 1
         
         gameControler.draw()

@@ -21,7 +21,7 @@
     cd /путь/к/папке/проекта
 2. Выполните комманду для создания файла:
     ```bash
-    pyinstaller --onefile game_3.py
+    pyinstaller --onefile --windowed game_3.py
 3. Перенесите исполняемый файл в корень проекта:
     ```bash
     move dist/game_3.exe

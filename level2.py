@@ -65,8 +65,9 @@ def start(screen, pol=[]):
                     root.withdraw()  # Скрыть главное окно
                     angle = simpledialog.askstring("Настройки", "Введите угол:")
                     root.destroy()  # Закрыть окно после ввода
-                    pol = Polarizer(cor[0], cor[1], int(angle), width=20)
-                    gameControler.objects.append(pol)
+                    if angle:
+                        pol = Polarizer(cor[0], cor[1], int(angle), width=20)
+                        gameControler.objects.append(pol)
 
         gameControler.draw()
 

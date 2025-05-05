@@ -18,9 +18,12 @@ pygame.display.set_caption('Повелитель оптики')
 clock = pygame.time.Clock()
 
 # === Загрузка ресурсов ===
+
+background_img = pygame.image.load("assets/icon.ico").convert()
+pygame.display.set_icon(background_img)
+
 background_img = pygame.image.load("assets/background.png").convert()
 background_img = pygame.transform.scale(background_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_icon(background_img)
 
 finish_img = pygame.image.load("assets/finish.png").convert()
 finish_img = pygame.transform.scale(finish_img, (SCREEN_WIDTH, SCREEN_HEIGHT))

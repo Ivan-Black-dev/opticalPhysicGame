@@ -6,6 +6,8 @@ import pol_medium   # файл со средним уровнем
 import pol_hard     # файл со сложным уровнем
 import main
 
+from win_menu.pol import easy, hard, medium
+
 def start(screen):
     clock = pygame.time.Clock()
     WIDTH, HEIGHT = screen.get_size()
@@ -55,7 +57,9 @@ def start(screen):
                 easy_pressed = True
             elif easy_pressed:
                 easy_pressed = False
-                pol_easy.start(screen)
+                win = pol_easy.start(screen)
+                easy.show_menu(screen, win)
+
         else:
             easy_pressed = False
 
@@ -64,7 +68,8 @@ def start(screen):
                 medium_pressed = True
             elif medium_pressed:
                 medium_pressed = False
-                pol_medium.start(screen)
+                win = pol_medium.start(screen)
+                medium.show_menu(screen, win)
         else:
             medium_pressed = False
 
@@ -73,7 +78,8 @@ def start(screen):
                 hard_pressed = True
             elif hard_pressed:
                 hard_pressed = False
-                pol_hard.start(screen)
+                win = pol_hard.start(screen)
+                hard.show_menu(screen, win)
         else:
             hard_pressed = False
 

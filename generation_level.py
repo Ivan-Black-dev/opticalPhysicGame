@@ -4,9 +4,10 @@ from ray import Ray
 from finishObject import FinishObject
 import color
 from mirror import Mirror
-from wall import Wall
 import sys
 from generator import Generator
+from button import Button
+import optic_choice
 
 
  
@@ -14,13 +15,15 @@ from generator import Generator
 
 def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
 
+    W, H = screen.get_size()
+
     pygame.font.init()
     font = pygame.font.Font(None, 45)
+    exit_button_font = pygame.font.Font(None, 20)
+    exit_button = Button((W-150, H-150, 100, 20), 'ВЫХОД', exit_button_font, (200, 200, 200), (255, 255, 255))
 
-    W, H = screen.get_size()
     generator = Generator(W, H)
     gameControler = GameControler(screen)
-    # ============================== СТЕНЫ ==============================
     if firstLaunch:
         walls, points = generator.generate_walls()
         for wall in walls:
@@ -69,6 +72,9 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
                 pygame.quit()
                 sys.exit()
 
+            if exit_button.handle_event(event):
+                optic_choice.start(screen)
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_s:
                     stop = True
@@ -115,7 +121,7 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
                 holdedMirror.y2 = y
 
         gameControler.draw()
-
+        exit_button.draw(screen)
         if len(points) == 1:
             pygame.draw.line(screen, color.GRAY, points[0], pygame.mouse.get_pos())
 
@@ -149,15 +155,7 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
 
         gameControler.calculate()
         if gameControler.win:
-            count = len(gameControler.objects) - startObjectLen
-            if count == 2:
-                return 3
-            elif count == 3:
-                return 2
-            elif count > 3:
-                return 1
-            else:
-                return 0
+            return
         
         gameControler.draw()
 

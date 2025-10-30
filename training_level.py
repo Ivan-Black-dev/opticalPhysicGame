@@ -4,19 +4,23 @@ from ray import Ray
 from finishObject import FinishObject
 import color
 from mirror import Mirror
-from wall import Wall
 import sys
-
+from button import Button
+import optic_choice
 
  
 
 
 def start(screen, mirrors=[]):
 
+    
+    W, H = screen.get_size()
+
     pygame.font.init()
     font = pygame.font.Font(None, 45)
+    exit_button_font = pygame.font.Font(None, 20)
+    exit_button = Button((W-150, H-150, 100, 20), 'ВЫХОД', exit_button_font, (200, 200, 200), (255, 255, 255))
 
-    W, H = screen.get_size()
 
     gameControler = GameControler(screen)
 
@@ -41,6 +45,9 @@ def start(screen, mirrors=[]):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            if exit_button.handle_event(event):
+                optic_choice.start(screen)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_s:
@@ -95,7 +102,9 @@ def start(screen, mirrors=[]):
         text = font.render("s - старт", True, (255, 255, 255))  # Белый цвет текста
 
         # Получаем прямоугольник текста для центрирования
-        text_rect = text.get_rect(center=(640, 400))  # Центрируем текст в окне
+        text_rect = text.get_rect(center=(W-75, H-100))  # Центрируем текст в окне
+        
+        exit_button.draw(screen)
 
         # Отображаем текст на экране
         screen.blit(text, text_rect)
@@ -119,20 +128,14 @@ def start(screen, mirrors=[]):
 
         gameControler.calculate()
         if gameControler.win:
-            count = len(gameControler.objects) - startObjectLen
-            if count == 2:
-                return 3
-            elif count == 3:
-                return 2
-            elif count > 3:
-                return 1
+            return
         
         gameControler.draw()
 
         text = font.render("r - заново", True, (255, 255, 255))  # Белый цвет текста
 
         # Получаем прямоугольник текста для центрирования
-        text_rect = text.get_rect(center=(640, 400))  # Центрируем текст в окне
+        text_rect = text.get_rect(center=(W-75, H-100))  # Центрируем текст в окне
 
         # Отображаем текст на экране
         screen.blit(text, text_rect)

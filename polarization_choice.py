@@ -11,13 +11,13 @@ def start(screen):
     WIDTH, HEIGHT = screen.get_size()
 
     # Загрузка фона и кнопок
-    background = pygame.image.load("assets/background.png").convert()
-    easy_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    medium_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    hard_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    back_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
+    background = pygame.image.load("assets/polar_back.png").convert()
+    easy_img = pygame.image.load("assets/easy.png").convert_alpha()
+    medium_img = pygame.image.load("assets/normal.png").convert_alpha()
+    hard_img = pygame.image.load("assets/hard.png").convert_alpha()
+    back_img = pygame.image.load("assets/out.png").convert_alpha()
 
-    btn_w = int(WIDTH * 0.2)
+    btn_w = int(WIDTH * 0.3)
     btn_h = int(HEIGHT * 0.12)
     easy_img = pygame.transform.smoothscale(easy_img, (btn_w, btn_h))
     medium_img = pygame.transform.smoothscale(medium_img, (btn_w, btn_h))

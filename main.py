@@ -20,24 +20,24 @@ def start():
 
     # Загрузка изображений
     background = pygame.image.load("assets/background.png").convert()
-    title_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    level1_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    level2_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    exit_img = pygame.image.load("assets/pixel_button.png").convert_alpha()  # кнопка выхода
+    # title_img = pygame.image.load("assets/optic.png").convert_alpha()
+    level1_img = pygame.image.load("assets/optic.png").convert_alpha()
+    level2_img = pygame.image.load("assets/generation.png").convert_alpha()
+    exit_img = pygame.image.load("assets/home.png").convert_alpha()  # кнопка выхода
 
     # Размеры кнопок и заголовка
-    button_width, button_height = int(WIDTH * 0.2), int(HEIGHT * 0.15)
+    button_width, button_height = int(WIDTH * 0.3), int(HEIGHT * 0.15)
     title_height = int(HEIGHT * 0.3)
-    title_width = int(title_img.get_width() * (title_height / title_img.get_height()))  # сохр. пропорции
+    # title_width = int(title_img.get_width() * (title_height / title_img.get_height()))  # сохр. пропорции
 
-    title_img = pygame.transform.smoothscale(title_img, (title_width, title_height))
+    #title_img = pygame.transform.smoothscale(title_img, (title_width, title_height))
     level1_img = pygame.transform.smoothscale(level1_img, (button_width, button_height))
     level2_img = pygame.transform.smoothscale(level2_img, (button_width, button_height))
     exit_img = pygame.transform.smoothscale(exit_img, (button_width, button_height))
 
     center_x = WIDTH // 2
 
-    title_rect = title_img.get_rect(center=(center_x, HEIGHT // 2 - button_height * 2))
+    # title_rect = title_img.get_rect(center=(center_x, HEIGHT // 2 - button_height * 2))
     level1_rect = level1_img.get_rect(center=(center_x, HEIGHT // 2 - button_height // 4))
     level2_rect = level2_img.get_rect(center=(center_x, HEIGHT // 2 + button_height))
     exit_rect = exit_img.get_rect(center=(center_x, HEIGHT // 2 + button_height * 2.5))
@@ -66,7 +66,7 @@ def start():
                 mouse_clicked = True
 
         screen.blit(pygame.transform.smoothscale(background, (WIDTH, HEIGHT)), (0, 0))
-        screen.blit(title_img, title_rect)
+        # screen.blit(title_img, title_rect)
 
         # Обработка нажатий кнопок с запуском теории, а затем уровня без дополнительного клика
         if level1_rect.collidepoint(mouse_pos):

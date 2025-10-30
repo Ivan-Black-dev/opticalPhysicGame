@@ -12,13 +12,13 @@ def start(screen):
     WIDTH, HEIGHT = screen.get_size()
 
     # Загрузка фона и кнопок
-    background = pygame.image.load("assets/background.png").convert()
-    training_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    generation_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
-    main_img = pygame.image.load("assets/pixel_button.png").convert_alpha()
+    background = pygame.image.load("assets/geom_back.png").convert()
+    training_img = pygame.image.load("assets/tren.png").convert_alpha()
+    generation_img = pygame.image.load("assets/generation.png").convert_alpha()
+    main_img = pygame.image.load("assets/out.png").convert_alpha()
 
     # Размер кнопок 20% ширины и 15% высоты
-    btn_width = int(WIDTH * 0.2)
+    btn_width = int(WIDTH * 0.3)
     btn_height = int(HEIGHT * 0.15)
     training_img = pygame.transform.smoothscale(training_img, (btn_width, btn_height))
     generation_img = pygame.transform.smoothscale(generation_img, (btn_width, btn_height))

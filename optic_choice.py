@@ -4,6 +4,8 @@ import main
 import training_level  # модуль для тренировки
 import generation_level  # модуль для генерации
 
+from win_menu.optical import generation, traning
+
 
 def start(screen):
     pygame.init()
@@ -54,7 +56,8 @@ def start(screen):
                 training_pressed = True
             elif training_pressed:
                 training_pressed = False
-                training_level.start(screen)  # Запуск модуля тренировки
+                win = training_level.start(screen)  # Запуск модуля тренировки
+                traning.show_menu(screen, win)
         else:
             training_pressed = False
 
@@ -63,7 +66,8 @@ def start(screen):
                 generation_pressed = True
             elif generation_pressed:
                 generation_pressed = False
-                generation_level.start(screen)  # Запуск модуля генерации
+                win = generation_level.start(screen)  # Запуск модуля генерации
+                generation.show_menu(screen, win)
         else:
             generation_pressed = False
 

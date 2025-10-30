@@ -1,7 +1,9 @@
 import pygame
 import sys
-import level1  # твой файл с функцией для уровня 1
-import level2  # файл с функцией для уровня 2
+import level1  # файл с функцией уровня 1
+import level2  # файл с функцией уровня 2
+import level1_teory  # файл с теорией перед уровнем 1
+import level2_teory  # файл с теорией перед уровнем 2
 
 pygame.init()
 
@@ -30,14 +32,13 @@ level1_img = pygame.transform.smoothscale(level1_img, (button_width, button_heig
 level2_img = pygame.transform.smoothscale(level2_img, (button_width, button_height))
 exit_img = pygame.transform.smoothscale(exit_img, (button_width, button_height))
 
-# Позиционирование: заголовок по центру сверху, кнопки по центру с равными интервалами
 center_x = WIDTH // 2
 
 title_rect = title_img.get_rect(center=(center_x, HEIGHT // 2 - button_height * 2))
-
 level1_rect = level1_img.get_rect(center=(center_x, HEIGHT // 2 - button_height // 4))
 level2_rect = level2_img.get_rect(center=(center_x, HEIGHT // 2 + button_height))
 exit_rect = exit_img.get_rect(center=(center_x, HEIGHT // 2 + button_height * 2.5))
+
 
 def draw_button(image, rect, pressed):
     """Рисуем кнопку с эффектом нажатия"""
@@ -47,10 +48,12 @@ def draw_button(image, rect, pressed):
     else:
         screen.blit(image, rect)
 
+
 running = True
 level1_pressed = False
 level2_pressed = False
 exit_pressed = False
+
 
 while running:
     mouse_pos = pygame.mouse.get_pos()
@@ -65,14 +68,17 @@ while running:
     screen.blit(pygame.transform.smoothscale(background, (WIDTH, HEIGHT)), (0, 0))
     screen.blit(title_img, title_rect)
 
-    # Обработка нажатий кнопок
+    # Обработка нажатий кнопок с запуском теории, а затем уровня без дополнительного клика
     if level1_rect.collidepoint(mouse_pos):
         if mouse_clicked:
             level1_pressed = True
         else:
             if level1_pressed:
                 level1_pressed = False
-                level1.start(screen)  # Запуск уровня 1
+                # Запускаем сначала теорию, потом уровень
+                level1_teory.start(screen)
+                level1.start(screen)
+
     else:
         level1_pressed = False
 
@@ -82,7 +88,9 @@ while running:
         else:
             if level2_pressed:
                 level2_pressed = False
-                level2.start(screen)  # Запуск уровня 2
+                level2_teory.start(screen)
+                level2.start(screen)
+
     else:
         level2_pressed = False
 
@@ -92,11 +100,11 @@ while running:
         else:
             if exit_pressed:
                 exit_pressed = False
-                running = False  # Выход из игры
+                running = False
+
     else:
         exit_pressed = False
 
-    # Рисуем кнопки с эффектом нажатия
     draw_button(level1_img, level1_rect, level1_pressed)
     draw_button(level2_img, level2_rect, level2_pressed)
     draw_button(exit_img, exit_rect, exit_pressed)

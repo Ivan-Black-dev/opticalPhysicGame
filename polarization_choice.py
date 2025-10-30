@@ -3,7 +3,7 @@ import sys
 
 import pol_easy     # файл с легким уровнем
 import pol_medium   # файл со средним уровнем
-import hard_level     # файл со сложным уровнем
+import pol_hard     # файл со сложным уровнем
 import main
 
 def start(screen):
@@ -73,7 +73,7 @@ def start(screen):
                 hard_pressed = True
             elif hard_pressed:
                 hard_pressed = False
-                hard_level.start(screen)
+                pol_hard.start(screen)
         else:
             hard_pressed = False
 

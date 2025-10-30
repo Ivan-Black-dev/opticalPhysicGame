@@ -6,32 +6,58 @@ import color
 from mirror import Mirror
 from wall import Wall
 import sys
+from generator import Generator
 
 
  
 
 
-def start(screen, mirrors=[]):
+def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
 
     pygame.font.init()
     font = pygame.font.Font(None, 45)
 
     W, H = screen.get_size()
-
+    generator = Generator(W, H)
     gameControler = GameControler(screen)
     # ============================== СТЕНЫ ==============================
-
-    ray = Ray((20, 300,), (1, 0), width=2)
-    gameControler.objects.append(ray)
-
-    finish = FinishObject(W-100, 10, 75, 10, I=1, angle=-1)
-    gameControler.objects.append(finish)
-
-    startObjectLen = len(gameControler.objects)
+    if firstLaunch:
+        walls, points = generator.generate_walls()
+        for wall in walls:
+            gameControler.objects.append(wall)
 
 
-    for i in mirrors:
-        gameControler.objects.append(i)
+        if points[0] == 1:
+            start_ray = [(0, 0), (1, 1)]
+            ray = Ray((0, 0), (1, 1), width=2)
+        elif points[0] == 2:
+            start_ray = [(0, H), (1, -1)]
+            ray = Ray((0, H), (1, -1), width=2)
+        elif points[0] == 3:
+            start_ray = [(0, H/2) , (1, 0)]
+            ray = Ray((0, H/2) , (1, 0), width=2)
+        gameControler.objects.append(ray)
+
+        if points[-1] == 1:
+            finish = FinishObject(W-75, 0, 75, 10, I=1, angle=-1)
+        if points[-1] == 2:
+            finish = FinishObject(W-10, H/2-75/2, 10, 75, I=1, angle=-1)
+        elif points[-1] == 3:
+            finish = FinishObject(W-75, H-10, 75, 10, I=1, angle=-1)
+        gameControler.objects.append(finish)
+        startObjectLen = len(gameControler.objects)
+
+    else:
+        for i in walls:
+            if isinstance(i, Ray):
+                ray = Ray(start_ray[0], start_ray[1], width=2)
+                gameControler.objects.append(ray)
+            else:
+                gameControler.objects.append(i)    
+        startObjectLen = len(gameControler.objects)
+        for i in mirrors:
+            gameControler.objects.append(i)
+
 
     stop = False
     points = []
@@ -96,7 +122,7 @@ def start(screen, mirrors=[]):
         text = font.render("s - старт", True, (255, 255, 255))  # Белый цвет текста
 
         # Получаем прямоугольник текста для центрирования
-        text_rect = text.get_rect(center=(640, 400))  # Центрируем текст в окне
+        text_rect = text.get_rect(center=(W-75, H-100))  # Центрируем текст в окне
 
         # Отображаем текст на экране
         screen.blit(text, text_rect)
@@ -113,10 +139,13 @@ def start(screen, mirrors=[]):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     m = []
+                    objects = []
                     for i in gameControler.objects:
                         if isinstance(i, Mirror):
                             m.append(i)
-                    return start(screen, m)
+                        else:
+                            objects.append(i)
+                    return start(screen, mirrors=m, walls=objects, firstLaunch=False, start_ray=start_ray)
 
         gameControler.calculate()
         if gameControler.win:
@@ -127,16 +156,17 @@ def start(screen, mirrors=[]):
                 return 2
             elif count > 3:
                 return 1
+            else:
+                return 0
         
         gameControler.draw()
 
         text = font.render("r - заново", True, (255, 255, 255))  # Белый цвет текста
 
         # Получаем прямоугольник текста для центрирования
-        text_rect = text.get_rect(center=(640, 400))  # Центрируем текст в окне
+        text_rect = text.get_rect(center=(W-75, H-100))  # Центрируем текст в окне
 
         # Отображаем текст на экране
         screen.blit(text, text_rect)
 
         pygame.display.update()
-

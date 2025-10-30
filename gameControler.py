@@ -22,7 +22,10 @@ class GameControler:
         for i in this.objects:
             if isinstance(i, Ray):
                 for point in i.points:
-                    pygame.draw.circle(this.screen, i.color, point, i.width)
+                    try:
+                        pygame.draw.circle(this.screen, i.color, point, i.width)
+                    except:
+                        print(point)
             elif isinstance(i, Polarizer):
                 pygame.draw.circle(this.screen, i.color, (i.x, i.y), i.width)
                 font = pygame.font.Font(None, 20) 

@@ -26,8 +26,8 @@ def start():
     exit_img = pygame.image.load("assets/pixel_button.png").convert_alpha()  # кнопка выхода
 
     # Размеры кнопок и заголовка
-    button_width, button_height = int(WIDTH * 0.1), int(HEIGHT * 0.1)
-    title_height = int(HEIGHT * 0.2)
+    button_width, button_height = int(WIDTH * 0.2), int(HEIGHT * 0.15)
+    title_height = int(HEIGHT * 0.3)
     title_width = int(title_img.get_width() * (title_height / title_img.get_height()))  # сохр. пропорции
 
     title_img = pygame.transform.smoothscale(title_img, (title_width, title_height))

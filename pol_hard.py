@@ -141,11 +141,9 @@ def start(screen, pol=[]):
         if gameControler.win:
             I, _ = ray.intensiv_and_angle[-1]
             if round(I, 2) == 0.16:
-                return 2
-            elif 0.16 - 0.06 <= I <= 0.16 + 0.06:
-                return 3
+                return True
             else:
-                return 1
+                return False
 
         gameControler.draw()    
 

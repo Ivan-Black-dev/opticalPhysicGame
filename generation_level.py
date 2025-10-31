@@ -8,6 +8,7 @@ import sys
 from generator import Generator
 from button import Button
 import optic_choice
+from wall import Wall
 
 
  
@@ -18,12 +19,20 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
     W, H = screen.get_size()
 
     pygame.font.init()
-    font = pygame.font.Font(None, 45)
-    exit_button_font = pygame.font.Font(None, 20)
-    exit_button = Button((W-150, H-150, 100, 20), 'ВЫХОД', exit_button_font, (200, 200, 200), (255, 255, 255))
+    font = pygame.font.Font(None, 39)
+    exit_button_font = pygame.font.Font(None, 40)
+    exit_button = Button((W-300+10, H-120, 200, 40), 'ВЫХОД', exit_button_font, (200, 200, 200), (255, 255, 255))
 
     generator = Generator(W, H)
     gameControler = GameControler(screen)
+
+    wall = Wall(W-300, H-300, 300, 10)
+    gameControler.objects.append(wall)
+
+    wall = Wall(W-300, H-300, 10, 300)
+    gameControler.objects.append(wall)
+
+
     if firstLaunch:
         walls, points = generator.generate_walls()
         for wall in walls:
@@ -45,8 +54,6 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
             finish = FinishObject(W-75, 0, 75, 10, I=1, angle=-1)
         if points[-1] == 2:
             finish = FinishObject(W-10, H/2-75/2, 10, 75, I=1, angle=-1)
-        elif points[-1] == 3:
-            finish = FinishObject(W-75, H-10, 75, 10, I=1, angle=-1)
         gameControler.objects.append(finish)
         startObjectLen = len(gameControler.objects)
 
@@ -121,17 +128,31 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
                 holdedMirror.y2 = y
 
         gameControler.draw()
-        exit_button.draw(screen)
         if len(points) == 1:
             pygame.draw.line(screen, color.GRAY, points[0], pygame.mouse.get_pos())
 
         text = font.render("s - старт", True, (255, 255, 255))  # Белый цвет текста
-
-        # Получаем прямоугольник текста для центрирования
-        text_rect = text.get_rect(center=(W-75, H-100))  # Центрируем текст в окне
-
-        # Отображаем текст на экране
-        screen.blit(text, text_rect)
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+10))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("r - заново", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+30))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("Мышью раставлять", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+55))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("зеркала", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+75))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("Зеркала можно", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+100))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("двигать за края", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+125))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("del - удалить зеркало", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+150))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        exit_button.draw(screen)
         
         pygame.display.update()
 
@@ -142,6 +163,10 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            
+            if exit_button.handle_event(event):
+                optic_choice.start(screen)
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     m = []
@@ -159,12 +184,27 @@ def start(screen, mirrors=[], walls=[],start_ray=[],firstLaunch=True):
         
         gameControler.draw()
 
+        text = font.render("s - старт", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+10))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
         text = font.render("r - заново", True, (255, 255, 255))  # Белый цвет текста
-
-        # Получаем прямоугольник текста для центрирования
-        text_rect = text.get_rect(center=(W-75, H-100))  # Центрируем текст в окне
-
-        # Отображаем текст на экране
-        screen.blit(text, text_rect)
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+30))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("Мышью раставлять", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+55))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("зеркала", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+75))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("Зеркала можно", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+100))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("двигать за края", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+125))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        text = font.render("del - удалить зеркало", True, (255, 255, 255))  # Белый цвет текста
+        text_rect = text.get_rect(topleft=(W-300+10, H-300+150))  # Центрируем текст в окне
+        screen.blit(text, text_rect) # Отображаем текст на экране
+        exit_button.draw(screen)
 
         pygame.display.update()

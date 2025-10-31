@@ -99,7 +99,7 @@ def start(screen, pol=[]):
         text_rect = text.get_rect(topleft=(20, H // 2 + 30))
         screen.blit(text, text_rect)
 
-        text = font.render(f"Нужно: I = 0.25", True, (255, 255, 255))
+        text = font.render(f"Нужно: I = 0.13", True, (255, 255, 255))
         text_rect = text.get_rect(topleft=(W-200, H // 2 + 100))
         screen.blit(text, text_rect)
 
@@ -139,7 +139,7 @@ def start(screen, pol=[]):
         gameControler.calculate()
         if gameControler.win:
             I, _ = ray.intensiv_and_angle[-1]
-            if I == 0.5:
+            if round(I, 2) == 0.13:
                 return 2
             elif 0.16 - 0.06 <= I <= 0.16 + 0.06:
                 return 3
@@ -152,7 +152,7 @@ def start(screen, pol=[]):
         text_rect = text.get_rect(topleft=(20, H // 2 + 30))
         screen.blit(text, text_rect)
 
-        text = font.render(f"Нужно: I = 0.25", True, (255, 255, 255))
+        text = font.render(f"Нужно: I = 0.13", True, (255, 255, 255))
         text_rect = text.get_rect(topleft=(W-200, H // 2 + 100))
         screen.blit(text, text_rect)
 

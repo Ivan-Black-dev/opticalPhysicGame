@@ -22,7 +22,7 @@ def start():
     background = pygame.image.load("assets/background.png").convert()
     # title_img = pygame.image.load("assets/optic.png").convert_alpha()
     level1_img = pygame.image.load("assets/optic.png").convert_alpha()
-    level2_img = pygame.image.load("assets/generation.png").convert_alpha()
+    level2_img = pygame.image.load("assets/pol.png").convert_alpha()
     exit_img = pygame.image.load("assets/home.png").convert_alpha()  # кнопка выхода
 
     # Размеры кнопок и заголовка

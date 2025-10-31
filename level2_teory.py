@@ -4,9 +4,9 @@ def start(screen):
     clock = pygame.time.Clock()
 
     images_paths = [
-        "assets/num1.png",
-        "assets/num2.png",
-        "assets/num1.png"
+        "assets/p_t_1.png",
+        "assets/p_t_2.png",
+        "assets/p_t_3.png"
     ]
 
     images = [pygame.transform.smoothscale(pygame.image.load(p).convert_alpha(), screen.get_size()) for p in images_paths]

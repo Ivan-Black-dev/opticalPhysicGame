@@ -4,7 +4,6 @@ from wall import Wall
 from finishObject import FinishObject
 from polarizer import Polarizer
 from ray import Ray
-import color
 import sys
 from dialogBox import DialogBox
 from button import Button
@@ -74,6 +73,9 @@ def start(screen, pol=[]):
                     gameControler.objects = gameControler.objects[:-1]
             
             if dialog.active:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        dialog.deactivate()
                 result = dialog.handle_event(event)
                 if result is not None:
                     angle = result
@@ -85,7 +87,7 @@ def start(screen, pol=[]):
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     cor = pygame.mouse.get_pos()
-                    if event.button == 1 and (10 < cor[0] < W-10) and (10 < cor[0] < H-10):
+                    if event.button == 1:
                         dialog.activate("Введите угол:")
 
         gameControler.draw()

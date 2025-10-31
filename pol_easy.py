@@ -74,6 +74,9 @@ def start(screen, pol=[]):
                 polarization_choice.start(screen)
 
             if dialog.active:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        dialog.deactivate()
                 result = dialog.handle_event(event)
                 if result is not None:
                     angle = result
@@ -84,7 +87,7 @@ def start(screen, pol=[]):
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     cor = pygame.mouse.get_pos()
-                    if event.button == 1 and (10 < cor[0] < W-10) and (10 < cor[0] < H-10):
+                    if event.button == 1:
                         dialog.activate("Введите угол:")
 
 

@@ -35,4 +35,4 @@ class Generator:
         if len(walls) <= 2:
             print(walls)
             return this.generate_walls()
-        return walls, (randint(1, 3), randint(1, 3))
+        return walls, (randint(1, 3), randint(1, 2))
